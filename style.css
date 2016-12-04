@@ -18,11 +18,19 @@
 	float: left;
 }
 
-#square1 {
-	
+.symbol {
+	font-family: Arial, sans-serif;
+	font-size: 70px;
+	font-weight: bold;
+	text-align: center;
+  	vertical-align: middle;
+  	padding-top: 35px;
 }
 
-#square2 {
+.x {
+	color: black;
+}
 
-
+.o {
+	color: red;
 }
