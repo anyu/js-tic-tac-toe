@@ -1,6 +1,41 @@
-h2 {
-	font-family: Arial, sans-serif;
+body {
+	background: #293a47;
+	font-family: 'Lato', sans-serif;
+	color: white;
+}
+
+h1 {
 	text-align: center;
+}
+
+#resultMsg {
+	font-size: 16px;
+	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+button#restart {
+	cursor: pointer;
+	font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    padding: 15px 30px;
+    margin-top: 50px;
+    margin: auto;
+   	border-radius: 4px;
+	color: white;
+	background-color: #293a47; 
+    border: 1px solid white;
+	display: block;
+	-webkit-transition-duration: 0.2s; 
+    transition-duration: 0.2s;
+}
+
+button#restart:hover {
+	background-color: white; 
+    color: #293a47;
+    border: 1px solid #293a47;
 }
 
 #grid {
@@ -11,20 +46,34 @@ h2 {
 }
 
 #outer-container {
-	width: 500px;
+	width: 463px;
 	margin: auto;
+	text-align: center;
+	margin-bottom: 50px;
 }
 
 .square {
+	background: white;
 	position: relative;
 	width: 150px;
 	height: 150px;
-	border: 1px solid #dddddd;
+	margin: 2px;
+	float: left;
+	cursor: pointer;
+	-webkit-transition-duration: 0.2s; 
+    transition-duration: 0.2s;
+}
+
+.square:hover {
+	background: #feffea;
+	position: relative;
+	width: 150px;
+	height: 150px;
+	margin: 2px;
 	float: left;
 }
 
 .symbol {
-	font-family: Arial, sans-serif;
 	font-size: 70px;
 	font-weight: bold;
 	text-align: center;
@@ -33,9 +82,9 @@ h2 {
 }
 
 .x {
-	color: black;
+	color: #456177; 
 }
 
 .o {
-	color: red;
+	color: #774548;
 }

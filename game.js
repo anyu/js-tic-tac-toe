@@ -24,10 +24,10 @@ function init() {
         checkCols();
         checkDiagonals();
         checkCatsGame();
-        declareResult();
     }
 
     function endGame() {
+        declareResult();
         clearInterval(gameLoop);
     };
 
@@ -67,14 +67,11 @@ function init() {
             }
             if (rowSum == 3) {
                 winner = 1;
-                console.log("checkRows winner: " + winner);
-                // declareResult(1);
                 endGame();
             }
 
             if (rowSum == 12) {
                 winner = 2;
-                // declareResult(2);
                 endGame();
             }
             rowSum = 0;
@@ -135,15 +132,20 @@ function init() {
     }
 
     function declareResult() {
+
+        var displayMsg = document.getElementById('resultMsg');
+
         if (winner == 0) {
-            alert("Cat's game");
+            msg = document.createTextNode("Cat's game!");
         }
         else if (winner == 1) {
-            alert("Winner is X");
+            msg = document.createTextNode("Player X is the winner!");
         }
         else if (winner == 2) {
-            alert("Winner is O");
-        }
+            msg = document.createTextNode("Player O is the winner!");
+        }       
+        displayMsg.appendChild(msg);
+
     }
 
     // must be a more elegant way to do this...
@@ -201,6 +203,9 @@ function init() {
         }
     }
 
+    document.getElementById('restart').onclick = function() {
+       location.reload();
+    }
 }
 
 init();
