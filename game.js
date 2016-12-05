@@ -4,31 +4,34 @@ var winner;
 
 function init() {
 
-    var game = function() {
-        checkRows();
-        checkCols();
-        checkDiagonals();
+    // fill board array with 0's
+    for (var i = 0; i < 3; i ++) {
+        board[i] = [];
+        for (var j = 0; j < 3; j++) {
+            board[i][j] = 0;
+        }
     }
 
     newGame();
 
+    // newGame function may not be necessary?
     function newGame() {
-        gameLoop = setInterval(game, 350);            
+        gameLoop = setInterval(startGame, 350);            
+    }
+
+    function startGame() {
+        checkRows();
+        checkCols();
+        checkDiagonals();
+        checkCatsGame();
+        declareResult();
     }
 
     function endGame() {
         clearInterval(gameLoop);
     };
 
-    // fill board array with 0's
-    for (var i = 0; i < 3;i ++) {
-        board[i] = [];
-        for (var j = 0; j < 3;j++) {
-            board[i][j] = 0;
-        }
-    }
-
-    function drawSymbol(row,col, cell_number) {
+    function drawSymbol(row, col, cell_number) {
         var cell = document.getElementById('square' + cell_number);
         var mark = document.createElement('div');
 
@@ -63,12 +66,15 @@ function init() {
                 rowSum += board[i][j];
             }
             if (rowSum == 3) {
-                declareWinner(1);
+                winner = 1;
+                console.log("checkRows winner: " + winner);
+                // declareResult(1);
                 endGame();
             }
 
             if (rowSum == 12) {
-                declareWinner(2);
+                winner = 2;
+                // declareResult(2);
                 endGame();
             }
             rowSum = 0;
@@ -83,12 +89,12 @@ function init() {
                 colSum += board[j][i];
             }
             if (colSum == 3) {
-                declareWinner(1);
+                winner = 1;
                 endGame();
             }
 
             if (colSum == 12) {
-                declareWinner(2);
+                winner = 2;
                 endGame();
             }
             colSum = 0;
@@ -102,18 +108,37 @@ function init() {
         var rightDiagSum = board[0][2] + board[1][1] + board[2][0];
 
         if (leftDiagSum == 3 | rightDiagSum == 3) {
-            declareWinner(1);
+            winner = 1;
             endGame();
         }
 
         if (leftDiagSum == 12 | rightDiagSum == 12) {
-            declareWinner(2);
+            winner = 2;
             endGame();
         }
     }
 
-    function declareWinner(winner) {
-        if (winner == 1) {
+    // check if no more turns and it's a draw
+    function checkCatsGame() {
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                if (board[i][j] != 0) {
+                   continue;
+                }
+                else return false;
+            }
+        }
+        if(winner != 1 && winner != 2) {
+            winner = 0;
+        }
+        endGame();
+    }
+
+    function declareResult() {
+        if (winner == 0) {
+            alert("Cat's game");
+        }
+        else if (winner == 1) {
             alert("Winner is X");
         }
         else if (winner == 2) {
