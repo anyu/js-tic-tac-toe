@@ -1,3 +1,8 @@
+h2 {
+	font-family: Arial, sans-serif;
+	text-align: center;
+}
+
 #grid {
 	display: block;
   	padding: 0;
