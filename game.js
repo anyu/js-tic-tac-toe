@@ -1,8 +1,7 @@
 var board = [];
+var gameOver = false;
 var currentPlayer = 1;
 var winner;
-var gameOver = false;
-var testCount = 0;
 
 function init() {
 
@@ -131,73 +130,42 @@ function init() {
     function declareResult() {
         var displayMsg = document.getElementById('resultMsg');
 
-        if (winner == 0) {
-            msg = document.createTextNode("Cat's game!");
-        }
-        else if (winner == 1) {
-            msg = document.createTextNode("Player X is the winner!");
-        }
-        else if (winner == 2) {
-            msg = document.createTextNode("Player O is the winner!");
-        }       
-        displayMsg.appendChild(msg);
-
+        switch (winner) {
+            case 0:
+                result = document.createTextNode("Cat's game!");
+                break;
+            case 1:
+                result = document.createTextNode("Player X is the winner!");
+                break;
+            case 2:
+                result = document.createTextNode("Player O is the winner!");
+                break;
+        }   
+   
+        displayMsg.appendChild(result);
     }
 
-    // must be a more elegant way to do this...
-    document.getElementById('square1').onclick = function() {
-        if (cellIsFree(0,0) && !gameOver) {
-            drawSymbol(0,0,1);
-        }
-    }
+    // detect cell clicked
 
-    document.getElementById('square2').onclick = function() {
-        if (cellIsFree(0,1) && !gameOver) {
-            drawSymbol(0,1,2);
-        }
-    }
-
-    document.getElementById('square3').onclick = function() {
-        if (cellIsFree(0,2) && !gameOver) {
-            drawSymbol(0,2,3);
+    function detectClicks(row, col, cell_number) {
+        document.getElementById('square' + cell_number).onclick = function() {
+            if (cellIsFree(row, col) && !gameOver) {
+                drawSymbol(row,col, cell_number);
+            }
         }
     }
 
-    document.getElementById('square4').onclick = function() {
-        if (cellIsFree(1,0) && !gameOver) {
-            drawSymbol(1,0,4);
-        }
-    }
+    detectClicks(0,0,1);
+    detectClicks(0,1,2);
+    detectClicks(0,2,3);
 
-    document.getElementById('square5').onclick = function() {
-        if (cellIsFree(1,1) && !gameOver) {
-            drawSymbol(1,1,5);
-        }
-    }
+    detectClicks(1,0,4);
+    detectClicks(1,1,5);
+    detectClicks(1,2,6);
 
-    document.getElementById('square6').onclick = function() {
-        if (cellIsFree(1,2) && !gameOver) {
-            drawSymbol(1,2,6);
-        }
-    }
-
-    document.getElementById('square7').onclick = function() {
-        if (cellIsFree(2,0) && !gameOver) {
-            drawSymbol(2,0,7);
-        }
-    }
-
-    document.getElementById('square8').onclick = function() {
-        if (cellIsFree(2,1) && !gameOver) {
-            drawSymbol(2,1,8);
-        }
-    }
-
-    document.getElementById('square9').onclick = function() {
-        if (cellIsFree(2,2) && !gameOver) {
-            drawSymbol(2,2,9);
-        }
-    }
+    detectClicks(2,0,7);
+    detectClicks(2,1,8);
+    detectClicks(2,2,9);
 
     document.getElementById('restart').onclick = function() {
        location.reload();
