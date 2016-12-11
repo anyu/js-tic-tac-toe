@@ -6,27 +6,46 @@ var winner;
 function init() {
 
     // fill board array with 0's
-    for (var i = 0; i < 3; i ++) {
-        board[i] = [];
-        for (var j = 0; j < 3; j++) {
-            board[i][j] = 0;
+    for (var row = 0; row < 3; row++) {
+        board[row] = [];
+        for (var col = 0; col < 3; col++) {
+            board[row][col] = 0;
         }
     }
 
     gameLoop = setInterval(startGame, 350);    
 
     function startGame() {
+        detectPlayerActivity();
         checkRows();
         checkCols();
         checkDiagonals();
         checkCatsGame();
     }
 
-    function endGame() {
-        declareResult();
-        gameOver = true;
-        clearInterval(gameLoop);
-    };
+    function detectPlayerActivity() {
+        var cell_number = 1;
+        while (cell_number < 10) {
+            for (var row = 0; row < 3; row++) {
+                for (var col = 0; col < 3; col++) {
+                    detectClicks(row, col, cell_number);
+                    cell_number++;
+                }
+            }
+        }
+    }
+
+    function detectClicks(row, col, cell_number) {
+        document.getElementById('square' + cell_number).onclick = function() {
+            if (cellIsFree(row, col) && !gameOver) {
+                drawSymbol(row, col, cell_number);
+            }
+        }
+    }
+
+    function cellIsFree(row, col) {
+        return board[row][col] != 0 ? false : true
+    }
 
     function drawSymbol(row, col, cell_number) {
         var cell = document.getElementById('square' + cell_number);
@@ -51,16 +70,12 @@ function init() {
         currentPlayer = Math.abs(currentPlayer - 1);
     }
 
-    function cellIsFree(row, col) {
-        return board[row][col] != 0 ? false : true
-    }
-
     // check if three in a row
     function checkRows() { 
         var rowSum = 0;
-        for (var i = 0; i < 3; i ++) {
-            for (var j = 0; j < 3; j++) {
-                rowSum += board[i][j];
+        for (var row = 0; row < 3; row++) {
+            for (var col = 0; col < 3; col++) {
+                rowSum += board[row][col];
             }
             if (rowSum == 3) {
                 winner = 1;
@@ -78,9 +93,9 @@ function init() {
     // check if three in a column
     function checkCols() {
         var colSum = 0;
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++) {
-                colSum += board[j][i];
+        for (var row = 0; row < 3; row++) {
+            for (var col = 0; col < 3; col++) {
+                colSum += board[col][row];
             }
             if (colSum == 3) {
                 winner = 1;
@@ -113,9 +128,9 @@ function init() {
 
     // check if no more turns and it's a draw
     function checkCatsGame() {
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++) {
-                if (board[i][j] != 0) {
+        for (var row = 0; row < 3; row++) {
+            for (var col = 0; col < 3; col++) {
+                if (board[row][col] != 0) {
                    continue;
                 }
                 else return false;
@@ -126,6 +141,12 @@ function init() {
             endGame();
         }
     }
+
+    function endGame() {
+        declareResult();
+        gameOver = true;
+        clearInterval(gameLoop);
+    };
 
     function declareResult() {
         var displayMsg = document.getElementById('resultMsg');
@@ -145,28 +166,7 @@ function init() {
         displayMsg.appendChild(result);
     }
 
-    // detect cell clicked
-
-    function detectClicks(row, col, cell_number) {
-        document.getElementById('square' + cell_number).onclick = function() {
-            if (cellIsFree(row, col) && !gameOver) {
-                drawSymbol(row,col, cell_number);
-            }
-        }
-    }
-
-    detectClicks(0,0,1);
-    detectClicks(0,1,2);
-    detectClicks(0,2,3);
-
-    detectClicks(1,0,4);
-    detectClicks(1,1,5);
-    detectClicks(1,2,6);
-
-    detectClicks(2,0,7);
-    detectClicks(2,1,8);
-    detectClicks(2,2,9);
-
+    // New game
     document.getElementById('restart').onclick = function() {
        location.reload();
     }
